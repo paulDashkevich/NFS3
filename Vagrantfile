@@ -39,6 +39,20 @@ end
 		firewall-cmd --reload
 	SHELL
 
-end
-end
+	 end
+	end
+	
+	config.vm.define "server" do |server|
+        server.vm.provision "shell", inline: <<-SHELL
+            echo `hostname`
+            mkdir -p /mnt/workserver
+        SHELL
+       end
+       config.vm.define "client" do |client|
+        client.vm.provision "shell", inline: <<-SHELL
+            echo `hostname`
+            mkdir -p /mnt/workclient
+        SHELL
+       end
+
 end
