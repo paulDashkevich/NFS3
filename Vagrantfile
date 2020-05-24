@@ -28,8 +28,16 @@ end
  	  box.vm.provision "shell", inline: <<-SHELL
 	      mkdir -p ~root/.ssh
               cp ~vagrant/.ssh/auth* ~root/.ssh
-	      yum install -y mdadm smartmontools hdparm gdisk
-  	  SHELL
+		 sudo su
+		 yum install nfs-utils -y
+		 yum install firewalld -y 
+	         systemctl start firewalld.service
+		 systemctl enable firewalld.service; exit 0
+		firewall-cmd --permanent --zone=public --add-service=nfs
+		firewall-cmd --permanent --zone=public --add-service=mountd
+		firewall-cmd --permanent --zone=public --add-service=rpc-bind
+		firewall-cmd --reload
+	SHELL
 
 end
 end
