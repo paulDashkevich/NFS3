@@ -1,6 +1,9 @@
 #!/bin/bash
 mkdir -p /mnt/nfs/Upload
 mount -t nfs -o nfsvers=3 192.168.11.101:/home/vagrant/Upload/ /mnt/nfs/Upload/
+cat >> /etc/fstab <<EOF
+192.168.11.101:/home/vagrant/Upload/ /mnt/nfs/Upload/ nfs defaults 0 0
+EOF
 systemctl enable rpcbind
 systemctl enable nfs-server
 systemctl enable nfs-lock
