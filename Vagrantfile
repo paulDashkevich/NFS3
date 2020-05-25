@@ -33,10 +33,6 @@ end
 		 yum install firewalld -y 
 	         systemctl start firewalld.service
 		 systemctl enable firewalld.service; exit 0
-		firewall-cmd --permanent --zone=public --add-service=nfs
-		firewall-cmd --permanent --zone=public --add-service=mountd
-		firewall-cmd --permanent --zone=public --add-service=rpc-bind
-		firewall-cmd --reload
 	SHELL
 
 	 end
@@ -45,14 +41,19 @@ end
 	config.vm.define "server" do |server|
         server.vm.provision "shell", inline: <<-SHELL
             echo `hostname`
-            mkdir -p /mnt/workserver
+	    chmod +x /vagrant/scripts/server.sh
+	    /vagrant/scripts/server.sh
+	    yum install mc -y
+            exit 0
         SHELL
        end
        config.vm.define "client" do |client|
         client.vm.provision "shell", inline: <<-SHELL
             echo `hostname`
-            mkdir -p /mnt/workclient
-        SHELL
+	    chmod +x /vagrant/scripts/client.sh
+            /vagrant/scripts/client.sh
+            exit 0
+            SHELL
        end
 
 end
