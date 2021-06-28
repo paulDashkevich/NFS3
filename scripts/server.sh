@@ -1,9 +1,9 @@
 #!/bin/bash
 mkdir /home/vagrant/Upload
-chmod -R 755 /home/vagrant/Upload
-chown vagrant:vagrant /home/vagrant/Upload
+chmod -R 777 /home/vagrant/Upload
+chown root:root /VIRT
 cat > /etc/exports <<EOF
-/home/vagrant/Upload 192.168.11.102(async,rw,no_subtree_check,root_squash,anonuid=1000,anongid=1000)
+/VIRT *(async,rw,no_subtree_check,root_squash,anonuid=1000,anongid=1000)
 EOF
 exportfs -arv
 echo "шара готова!"
